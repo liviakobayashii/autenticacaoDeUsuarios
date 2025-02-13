@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type User = {
+  id: number;
+  name: string;
   email: string;
   password: string;
 };
@@ -41,20 +43,10 @@ export default function LogIn() {
       console.log("erro");
     }
   };
-  // const addUser = () => {
-  //   if (name.trim() !== "" && email.trim() !== "" && password.trim() !== "") {
-
-  //     const newUser = { name, email, password };
-
-  //     users.push(newUser);
-
-  //     router.push("/login");
-  //   }
-  // };
 
   return (
     <div className="flex flex-col h-screen w-screen justify-center items-center">
-      <form className="flex flex-col border border-white/30 w-96 h-96 rounded-md p-4 gap-3 justify-center items-center ">
+      <form className="flex flex-col border border-white/30 w-96 h-auto rounded-md p-4 gap-3 justify-center items-center ">
         {error && (
           <div className="bg-red-400 text-black border border-red-800 rounded-md p-3 mb-4">
             {error}
@@ -76,6 +68,13 @@ export default function LogIn() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button type="button" onClick={checkUser} />
+        <p className="mt-4 text-sm" onClick={() => router.push("/cadastro")}>
+          Ainda não tem uma conta? Então faça o{" "}
+          <span className="cursor-pointer hover:text-blue-700 duration-200 ">
+            cadastro
+          </span>{" "}
+          agora mesmo!
+        </p>
       </form>
     </div>
   );
