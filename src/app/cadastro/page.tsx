@@ -32,33 +32,35 @@ export default function SignIn() {
   };
 
   return (
-    <form
-      className="flex flex-col border border-white/30 w-96 h-96 rounded-md p-4 gap-3 justify-center items-center "
-      id="signInId"
-    >
-      <h1 className="font-bold text-xl mb-3">Faça seu cadastro!</h1>
-      <input
-        value={name}
-        type="text"
-        placeholder="Digite seu nome"
-        className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        value={email}
-        type="email"
-        placeholder="Digite seu email"
-        className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        value={password}
-        type="password"
-        placeholder="Digite sua senha"
-        className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button type="button" onClick={addUser} />
-    </form>
+    <div className="flex flex-col h-screen w-screen justify-center items-center">
+      <form
+        className="flex flex-col border border-white/30 w-96 h-96 rounded-md p-4 gap-3 justify-center items-center "
+        id="signInId"
+      >
+        <h1 className="font-bold text-xl mb-3">Faça seu cadastro!</h1>
+        <input
+          value={name}
+          type="text"
+          placeholder="Digite seu nome"
+          className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          value={email}
+          type="email"
+          placeholder="Digite seu email"
+          className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          value={password}
+          type="password"
+          placeholder="Digite sua senha"
+          className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button type="button" onClick={addUser} />
+      </form>
+    </div>
   );
 }
