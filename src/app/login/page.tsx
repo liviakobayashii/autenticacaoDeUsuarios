@@ -34,48 +34,58 @@ export default function LogIn() {
     if (foundUser) {
       setError("");
 
-      localStorage.setItem("@LoggedUsers", JSON.stringify(foundUser));
+      localStorage.setItem("@LoggedUser", JSON.stringify(foundUser));
       router.push("/dashboard");
     } else {
       setError(
-        "Usuário não encontrado. Verifique seu email e senha ou cadastre-se."
+        "Usuário não encontrado. Verifique seu email e senha novamente ou cadastre-se."
       );
-      console.log("erro");
     }
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen justify-center items-center">
-      <form className="flex flex-col border border-white/30 w-96 h-auto rounded-md p-4 gap-3 justify-center items-center ">
-        {error && (
-          <div className="bg-red-400 text-black border border-red-800 rounded-md p-3 mb-4">
-            {error}
-          </div>
-        )}
-        <h1 className="font-bold text-xl mb-3">Faça seu Login!</h1>
-        <input
-          value={email}
-          type="email"
-          placeholder="Digite seu email"
-          className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          value={password}
-          type="password"
-          placeholder="Digite sua senha"
-          className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button type="button" onClick={checkUser} />
-        <p className="mt-4 text-sm" onClick={() => router.push("/cadastro")}>
-          Ainda não tem uma conta? Então faça o{" "}
-          <span className="cursor-pointer hover:text-blue-700 duration-200 ">
-            cadastro
-          </span>{" "}
-          agora mesmo!
-        </p>
-      </form>
-    </div>
+    <section className="flex w-full h-full">
+      <div className="w-screen h-screen bg-slate-200 items-center justify-center">
+        <img src="../../../login.png" alt="" className="h-screen w-screen" />
+      </div>
+
+      <div className="flex flex-col h-screen w-screen bg-blue-600 justify-center items-center">
+        <form className="flex flex-col bg-slate-200 border border-white/30 w-96 h-auto rounded-md p-5 gap-3 justify-center items-center ">
+          {error && (
+            <div className="bg-red-400 text-black border border-red-800 rounded-md p-3 mb-4">
+              {error}
+            </div>
+          )}
+          <h1 className="font-bold text-black text-2  xl mb-3">
+            Faça seu Login!
+          </h1>
+          <input
+            value={email}
+            type="email"
+            placeholder="exemplo@email.com"
+            className="w-full p-3 rounded-md bg-white/90 outline-none text-black border border-gray-400"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            value={password}
+            type="password"
+            placeholder="*****"
+            className="w-full p-3 rounded-md bg-white/90 outline-none text-black border border-gray-400"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="button" onClick={checkUser} />
+          <p
+            className="text-black/60 mt-4 text-sm"
+            onClick={() => router.push("/cadastro")}
+          >
+            Ainda não tem uma conta? Então faça o{" "}
+            <span className="cursor-pointer hover:text-blue-700 duration-200 ">
+              cadastro
+            </span>{" "}
+            agora mesmo!
+          </p>
+        </form>
+      </div>
+    </section>
   );
 }

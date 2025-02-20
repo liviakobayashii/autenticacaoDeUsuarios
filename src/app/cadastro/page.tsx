@@ -1,5 +1,4 @@
 "use client";
-
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -32,7 +31,7 @@ export default function SignIn() {
       const emailExists = users.some((item: User) => item.email === email);
 
       if (emailExists) {
-        setError("Esse email já foi cadastrado. Faça o logIn");
+        setError("Esse email já foi cadastrado. Faça o Login");
         return;
       }
 
@@ -44,51 +43,62 @@ export default function SignIn() {
       router.push("/login");
     }
   };
-
   return (
-    <div className="flex flex-col h-screen w-screen justify-center items-center">
-      <form
-        className="flex flex-col border border-white/30 w-96 h-auto rounded-md p-4 gap-3 justify-center items-center "
-        id="signInId"
-      >
-        {error && (
-          <div className="bg-red-400 text-black border border-red-800 rounded-md p-3 mb-4">
-            {error}
-          </div>
-        )}
+    <section className="flex w-full h-full">
+      <div className="w-screen h-screen bg-slate-200 items-center justify-center">
+        <img src="../../../signin.png" alt="" className="h-screen w-screen" />
+      </div>
 
-        <h1 className="font-bold text-xl mb-3">Faça seu cadastro!</h1>
-        <input
-          value={name}
-          type="text"
-          placeholder="Digite seu nome"
-          className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          value={email}
-          type="email"
-          placeholder="Digite seu email"
-          className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          value={password}
-          type="password"
-          placeholder="Digite sua senha"
-          className="w-full p-3 rounded-md bg-white/90 outline-none text-black"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button type="button" onClick={addUser} />
+      <div className="flex flex-col h-screen w-screen bg-blue-600 justify-center items-center">
+        <form
+          className="flex flex-col bg-slate-200 border border-white/30 w-96 h-auto rounded-md p-5 gap-3 justify-center items-center "
+          id="signInId"
+        >
+          {error && (
+            <div className="bg-yellow-200 text-black border border-yellow-600 rounded-md p-3 mb-4">
+              {error}
+            </div>
+          )}
 
-        <p className=" mt-4 text-sm" onClick={() => router.push("/cadastro")}>
-          Já tem uma conta? Então faça o{" "}
-          <span className="cursor-pointer hover:text-blue-700 duration-200">
-            LogIn
-          </span>{" "}
-          agora mesmo!
-        </p>
-      </form>
-    </div>
+          <h1 className="font-bold text-black text-2xl mb-3">
+            Faça seu cadastro!
+          </h1>
+          <input
+            value={name}
+            type="text"
+            placeholder="Nome completo"
+            className="w-full p-3 rounded-md bg-white/90 outline-none text-black border border-gray-400"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            value={email}
+            type="email"
+            placeholder="exemplo@email.com"
+            className="w-full p-3 rounded-md bg-white/90 outline-none text-black border border-gray-400"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            value={password}
+            type="password"
+            placeholder="*****"
+            className="w-full p-3 rounded-md bg-white/90 outline-none text-black border border-gray-400"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="button" onClick={addUser} />
+          <p
+            className="text-black/60 mt-4 text-sm"
+            onClick={() => router.push("/login")}
+          >
+            Já tem uma conta? Então faça o{" "}
+            <span className="cursor-pointer hover:text-blue-700 duration-200 ">
+              Login
+            </span>{" "}
+            agora mesmo!
+          </p>
+        </form>
+      </div>
+    </section>
   );
+  // return (
+  // );
 }
