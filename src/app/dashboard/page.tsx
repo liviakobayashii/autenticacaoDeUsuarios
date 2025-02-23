@@ -13,9 +13,6 @@ type User = {
 
 export default function Dashboard() {
   const userCtx = useContext(AuthContext);
-  useEffect(() => {
-    console.log(userCtx);
-  }, [userCtx]);
 
   if (userCtx?.loading === true) {
     return (
@@ -25,8 +22,7 @@ export default function Dashboard() {
     );
   } else {
     if (!userCtx?.user) {
-      // redirect("/login");
-      console.log("oiee");
+      redirect("/login");
     }
 
     const logout = () => {

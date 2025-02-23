@@ -1,7 +1,8 @@
 "use client";
 import Button from "@/components/Button";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
+import { redirect, useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 
 type User = {
   id: number;
@@ -15,6 +16,8 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const userCtx = useContext(AuthContext);
 
   const getUsers = () => {
     const storedUsers = localStorage.getItem("@Users");
@@ -43,6 +46,11 @@ export default function SignIn() {
       router.push("/login");
     }
   };
+
+  if (userCtx?.user) {
+    redirect("/dashboard");
+  }
+
   return (
     <section className="flex w-full h-full">
       <div className="w-screen h-screen bg-slate-200 items-center justify-center">
