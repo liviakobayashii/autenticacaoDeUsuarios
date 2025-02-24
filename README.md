@@ -2,7 +2,7 @@
 Um sistema de autenticação onde os usuários podem se cadastrar, fazer login e acessar um dashboard personalizado com suas informações salvas no localStorage.
 
 ## 🚀 Deploy do projeto
-[[Link para o projeto](https://seu-projeto.vercel.app)](https://autenticacao-de-usuarios.vercel.app/)
+https://autenticacao-de-usuarios.vercel.app
 
 ## 📌 Funcionalidades
 * Cadastro de novos usuários.
