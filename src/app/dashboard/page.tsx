@@ -3,13 +3,8 @@
 import { AuthContext } from "@/contexts/AuthContext";
 import { redirect } from "next/navigation";
 import { useContext, useEffect } from "react";
-
-type User = {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-};
+import { Icon } from "@iconify/react";
+import Header from "@/components/Header";
 
 export default function Dashboard() {
   const userCtx = useContext(AuthContext);
@@ -26,23 +21,41 @@ export default function Dashboard() {
     }
 
     const logout = () => {
-      localStorage.setItem("@LoggedUser", "");
+      localStorage.removeItem("@LoggedUser");
       redirect("/login");
     };
     return (
-      <div className="flex flex-col w-screen h-screen justify-center items-center">
-        <div className=" flex flex-col gap-3 w-96 h-auto border border-white rounded-md p-4">
-          <h1 className="text-lg mb-3 text-center">Dashboard</h1>
-          <p>Nome do usuário: {userCtx?.user?.name}</p>
-          <p>Email do usuário: {userCtx?.user?.email}</p>
-          <button
-            onClick={logout}
-            className="border border-white bg-blue-500 text-white p-2 rounded-md hover:border-blue-700 hover:text-blue-700 duration-200 self-end"
-          >
-            Sair
-          </button>
-        </div>
-      </div>
+      <>
+        <Header />
+        <section className="grid grid-cols-5 h-full">
+          <section className="flex flex-col col-span-1 bg-neutral-200 h-[calc(100vh-96px)] justify-between pt-4 pb-4">
+            <div>
+              <div className="flex gap-1 p-3">
+                <Icon
+                  icon="basil:user-outline"
+                  className="text-blue-600 font-bold text-xl"
+                />
+                <p className="text-black">{userCtx?.user?.name}</p>
+              </div>
+              <div className="flex gap-1 p-3">
+                <Icon
+                  icon="ic:round-alternate-email"
+                  className="text-blue-600 font-bold text-xl"
+                />
+                <p className="text-black">{userCtx?.user?.email}</p>
+              </div>
+            </div>
+            <div className="flex gap-1 p-3 cursor-pointer" onClick={logout}>
+              <Icon
+                icon="material-symbols:logout-rounded"
+                className="text-blue-600 font-bold text-xl"
+              />
+              <p className="text-black">Sair</p>
+            </div>
+          </section>
+          <div className="col-span-4 h-full ">oiee</div>
+        </section>
+      </>
     );
   }
 }
