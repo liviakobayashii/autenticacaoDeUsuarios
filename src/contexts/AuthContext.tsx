@@ -3,6 +3,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 
 type AuthContextType = {
   user: UsersType | null;
+  setUser: (user: UsersType | null) => void;
   loading: boolean;
 };
 
@@ -23,7 +24,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, setUser, loading }}>
       {children}
     </AuthContext.Provider>
   );

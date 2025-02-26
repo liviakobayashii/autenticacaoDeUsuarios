@@ -1,8 +1,9 @@
 "use client";
 
 import Button from "@/components/Button";
+import { AuthContext } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 type User = {
   id: number;
@@ -12,6 +13,8 @@ type User = {
 };
 
 export default function LogIn() {
+  const userCtx = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -34,6 +37,7 @@ export default function LogIn() {
     if (foundUser) {
       setError("");
 
+      userCtx?.setUser(foundUser);
       localStorage.setItem("@LoggedUser", JSON.stringify(foundUser));
       router.push("/dashboard");
     } else {
@@ -56,7 +60,7 @@ export default function LogIn() {
               {error}
             </div>
           )}
-          <h1 className="font-bold text-black text-2  xl mb-3">
+          <h1 className="font-bold text-black text-2xl mb-3">
             Faça seu Login!
           </h1>
           <input
