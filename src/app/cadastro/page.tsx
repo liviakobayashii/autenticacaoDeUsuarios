@@ -25,6 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { getUsers } from "@/components/getLocalStorage";
 
 export default function SignIn() {
   const router = useRouter();
@@ -51,12 +52,6 @@ export default function SignIn() {
     },
   });
 
-  const getUsers = () => {
-    const storedUsers = localStorage.getItem("@Users");
-
-    return storedUsers ? JSON.parse(storedUsers) : [];
-  };
-
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (
       values.name.trim() !== "" &&
@@ -69,14 +64,14 @@ export default function SignIn() {
         (item: any) => values.email === item.email
       );
 
-      // if (emailExists) {
-      //   console.log("não pode adicionar");
-      // } else {
-      users.push(values);
-      // localStorage.setItem("@Users", JSON.stringify(users));
-      router.push("/login");
-      toast("Cadastro efetuado com sucesso! Agora faça o login.");
-      // }
+      if (emailExists) {
+        console.log("não pode adicionar");
+      } else {
+        users.push(values);
+        localStorage.setItem("@Users", JSON.stringify(users));
+        router.push("/login");
+        toast("Cadastro efetuado com sucesso! Agora faça o login.");
+      }
     }
   }
 
@@ -97,7 +92,7 @@ export default function SignIn() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="flex flex-col gap-4"
               >
                 <FormField
                   control={form.control}
@@ -149,7 +144,7 @@ export default function SignIn() {
                 <p className="text-black/60 mt-4 text-sm">
                   Já tem uma conta? Então faça o{" "}
                   <span
-                    className="cursor-pointer hover:text-blue-700 duration-200 "
+                    className="cursor-pointer hover:text-blue-700 duration-200 font-bold"
                     onClick={() => router.push("/login")}
                   >
                     Login

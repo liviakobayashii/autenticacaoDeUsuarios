@@ -1,94 +1,133 @@
 "use client";
 
-import Button from "@/components/Button";
+import { getUsers } from "@/components/getLocalStorage";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { AuthContext } from "@/contexts/AuthContext";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
-
-type User = {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-};
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 export default function LogIn() {
-  const userCtx = useContext(AuthContext);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
   const router = useRouter();
 
-  const getUsers = () => {
-    const storedUsers = localStorage.getItem("@Users");
+  const formSchema = z.object({
+    email: z.string().email({
+      message: "E-mail inválido. Verifique novamente",
+    }),
+    password: z
+      .string()
+      .min(2, {
+        message: "A senha precisa ter no mínimo 2 caracteres",
+      })
+      .max(12),
+  });
 
-    return storedUsers ? JSON.parse(storedUsers) : [];
-  };
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const checkUser = () => {
-    const users = getUsers();
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    if (values.email.trim() !== "" && values.password.trim() !== "") {
+      const users = getUsers();
 
-    const foundUser = users.find(
-      (item: User) => item.email === email && item.password === password
-    );
-
-    if (foundUser) {
-      setError("");
-
-      userCtx?.setUser(foundUser);
-      localStorage.setItem("@LoggedUser", JSON.stringify(foundUser));
-      router.push("/dashboard");
-    } else {
-      setError(
-        "Usuário não encontrado. Verifique seu email e senha novamente ou cadastre-se."
+      const foundUser = users.find(
+        (item: any) =>
+          values.email === item.email && values.password === item.password
       );
+
+      if (foundUser) {
+        localStorage.setItem("@LoggedUser", JSON.stringify(foundUser));
+        router.push("/dashboard");
+      } else {
+        alert("E-mail ou senha incorretos.");
+      }
     }
-  };
+  }
 
   return (
-    <section className="flex w-full h-full">
-      <div className="w-screen h-screen bg-slate-200 items-center justify-center">
-        <img src="../../../login.png" alt="" className="h-screen w-screen" />
+    <section className="flex">
+      <div className="bg-slate-200 items-center justify-center">
+        <img src="../../../signin.png" alt="" className="h-screen w-screen" />
       </div>
-
       <div className="flex flex-col h-screen w-screen bg-blue-600 justify-center items-center">
-        <form className="flex flex-col bg-slate-200 border border-white/30 w-96 h-auto rounded-md p-5 gap-3 justify-center items-center ">
-          {error && (
-            <div className="bg-red-400 text-black border border-red-800 rounded-md p-3 mb-4">
-              {error}
-            </div>
-          )}
-          <h1 className="font-bold text-black text-2xl mb-3">
-            Faça seu Login!
-          </h1>
-          <input
-            value={email}
-            type="email"
-            placeholder="exemplo@email.com"
-            className="w-full p-3 rounded-md bg-white/90 outline-none text-black border border-gray-400"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            value={password}
-            type="password"
-            placeholder="*****"
-            className="w-full p-3 rounded-md bg-white/90 outline-none text-black border border-gray-400"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button type="button" onClick={checkUser} />
-          <p
-            className="text-black/60 mt-4 text-sm"
-            onClick={() => router.push("/cadastro")}
-          >
-            Ainda não tem uma conta? Então faça o{" "}
-            <span className="cursor-pointer hover:text-blue-700 duration-200 ">
-              cadastro
-            </span>{" "}
-            agora mesmo!
-          </p>
-        </form>
+        <Card className="w-96 border h-auto">
+          <CardHeader>
+            <CardTitle className="text-3xl text-blue-600">
+              Área de Login
+            </CardTitle>
+            <CardDescription>Faça seu Login agora mesmo!</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex flex-col gap-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-mail</FormLabel>
+                      <FormControl>
+                        <Input placeholder="exemplo@email.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Senha</FormLabel>
+                      <FormControl>
+                        <Input placeholder="****" {...field} type="password" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit">Login</Button>
+                <p className="text-black/60 mt-4 text-sm">
+                  Ainda não tem uma conta? Então faça o{" "}
+                  <span
+                    className="cursor-pointer hover:text-blue-700 duration-200 font-bold"
+                    onClick={() => router.push("/cadastro")}
+                  >
+                    cadastro
+                  </span>{" "}
+                  agora mesmo!
+                </p>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );
