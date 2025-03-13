@@ -2,7 +2,7 @@
 // import Button from "@/components/Button";
 import { AuthContext } from "@/contexts/AuthContext";
 import { redirect, useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -25,7 +25,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { getUsers } from "@/components/getLocalStorage";
+import { getLoggedUser, getUsers } from "@/components/getLocalStorage";
+
+// const userLoggedExist = getLoggedUser();
+// if (userLoggedExist) {
+//   redirect("/dashboard");
+// }
 
 export default function SignIn() {
   const router = useRouter();

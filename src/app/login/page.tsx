@@ -1,6 +1,6 @@
 "use client";
 
-import { getUsers } from "@/components/getLocalStorage";
+import { getLoggedUser, getUsers } from "@/components/getLocalStorage";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,11 +20,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { AuthContext } from "@/contexts/AuthContext";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+
+const userLoggedExist = getLoggedUser();
+if (userLoggedExist) {
+  redirect("/dashboard");
+}
 
 export default function LogIn() {
   const router = useRouter();
