@@ -76,11 +76,11 @@ export default function SignIn() {
   }
 
   return (
-    <section className="flex w-full h-full">
-      <div className="w-screen h-screen bg-slate-200 items-center justify-center">
+    <section className="flex justify-center items-center w-screen h-screen">
+      <div className=" hidden lg:flex">
         <img src="../../../signin.png" alt="" className="h-screen w-screen" />
       </div>
-      <div className="flex flex-col h-screen w-screen bg-blue-600 justify-center items-center">
+      <div className=" m-auto bg-blue-600 h-screen w-screen justify-center items-center flex flex-col">
         <Card className="w-96 border h-auto">
           <CardHeader>
             <CardTitle className="text-3xl text-blue-600">
