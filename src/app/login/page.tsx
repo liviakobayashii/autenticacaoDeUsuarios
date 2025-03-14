@@ -67,15 +67,19 @@ export default function LogIn() {
         localStorage.setItem("@LoggedUser", JSON.stringify(foundUser));
         router.push("/dashboard");
       } else {
-        alert("E-mail ou senha incorretos.");
+        toast.custom(() => (
+          <div className="bg-red-400 rounded-sm p-3">
+            E-mail ou senha incorretos. Verifique e tente novamente.
+          </div>
+        ));
       }
     }
   }
 
   return (
     <section className="flex">
-      <div className="bg-slate-200 items-center justify-center">
-        <img src="../../../signin.png" alt="" className="h-screen w-screen" />
+      <div className=" hidden lg:flex w-screen h-screen bg-slate-200 items-center justify-center">
+        <img src="../../../login.png" alt="" className="h-screen w-screen" />
       </div>
       <div className="flex flex-col h-screen w-screen bg-blue-600 justify-center items-center">
         <Card className="w-96 border h-auto">

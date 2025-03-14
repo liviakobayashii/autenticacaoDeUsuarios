@@ -75,14 +75,18 @@ export default function SignIn() {
         users.push(values);
         localStorage.setItem("@Users", JSON.stringify(users));
         router.push("/login");
-        toast("Cadastro efetuado com sucesso! Agora faça o login.");
+        toast.custom(() => (
+          <div className="bg-green-400 rounded-sm p-3">
+            Cadastro realizado com sucesso. Faça o login agora mesmo!
+          </div>
+        ));
       }
     }
   }
 
   return (
     <section className="flex w-full h-full">
-      <div className="w-screen h-screen bg-slate-200 items-center justify-center">
+      <div className=" hidden lg:flex w-screen h-screen bg-slate-200 items-center justify-center">
         <img src="../../../signin.png" alt="" className="h-screen w-screen" />
       </div>
       <div className="flex flex-col h-screen w-screen bg-blue-600 justify-center items-center">
