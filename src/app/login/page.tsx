@@ -1,6 +1,7 @@
 "use client";
 
-import { getLoggedUser, getUsers } from "@/components/getLocalStorage";
+import { getUsers } from "@/actions/get-users";
+import LoginUser from "@/actions/loginUser";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,21 +19,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { AuthContext } from "@/contexts/AuthContext";
+import { LoggedUserContext } from "@/contexts/user-context";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect, useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-const userLoggedExist = getLoggedUser();
-if (userLoggedExist) {
-  redirect("/dashboard");
-}
-
 export default function LogIn() {
   const router = useRouter();
+  const userLoggedCtx = useContext(LoggedUserContext);
+  if (userLoggedCtx?.loading) {
+    return;
+  }
+  userLoggedCtx?.user && redirect("/dashboard");
 
   const formSchema = z.object({
     email: z.string().email({
@@ -58,13 +59,16 @@ export default function LogIn() {
     if (values.email.trim() !== "" && values.password.trim() !== "") {
       const users = getUsers();
 
+      console.log("Usuários encontrados:", users);
+
       const foundUser = users.find(
         (item: any) =>
           values.email === item.email && values.password === item.password
       );
+      console.log(foundUser);
 
       if (foundUser) {
-        localStorage.setItem("@LoggedUser", JSON.stringify(foundUser));
+        LoginUser(foundUser);
         router.push("/dashboard");
       } else {
         toast.custom(() => (
@@ -75,7 +79,6 @@ export default function LogIn() {
       }
     }
   }
-
   return (
     <section className="flex">
       <div className=" hidden lg:flex w-screen h-screen bg-slate-200 items-center justify-center">

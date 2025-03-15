@@ -1,13 +1,11 @@
 "use client";
-// import Button from "@/components/Button";
-import { AuthContext } from "@/contexts/AuthContext";
+
 import { redirect, useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -25,15 +23,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { getLoggedUser, getUsers } from "@/components/getLocalStorage";
-
-const userLoggedExist = getLoggedUser();
-if (userLoggedExist) {
-  redirect("/dashboard");
-}
+import { LoggedUserContext } from "@/contexts/user-context";
+import { getUsers } from "@/actions/get-users";
+import SaveUser from "@/actions/save-user";
+import { getLoggedUser } from "@/actions/get-logged-user";
 
 export default function SignIn() {
   const router = useRouter();
+  const loggedUserCtx = useContext(LoggedUserContext);
+
+  const userLoggedExist = getLoggedUser();
+  if (userLoggedExist || loggedUserCtx?.user) {
+    redirect("/dashboard");
+  }
 
   const formSchema = z.object({
     name: z.string().trim().min(4, "O nome precisa ter no mínimo 4 letras."),
@@ -64,16 +66,19 @@ export default function SignIn() {
       values.password.trim() !== ""
     ) {
       const users = getUsers();
-
       const emailExists = users.some(
         (item: any) => values.email === item.email
       );
 
       if (emailExists) {
-        console.log("não pode adicionar");
+        toast.custom(() => (
+          <div className="bg-yellow-200 rounded-sm p-3">
+            Esse e-mail já foi cadastrado anteriormente. Favor realizar o login.
+          </div>
+        ));
       } else {
         users.push(values);
-        localStorage.setItem("@Users", JSON.stringify(users));
+        SaveUser(users);
         router.push("/login");
         toast.custom(() => (
           <div className="bg-green-400 rounded-sm p-3">
@@ -86,7 +91,7 @@ export default function SignIn() {
 
   return (
     <section className="flex w-full h-full">
-      <div className=" hidden lg:flex w-screen h-screen bg-slate-200 items-center justify-center">
+      <div className="hidden lg:flex w-screen h-screen bg-slate-200 items-center justify-center">
         <img src="../../../signin.png" alt="" className="h-screen w-screen" />
       </div>
       <div className="flex flex-col h-screen w-screen bg-blue-600 justify-center items-center">
@@ -168,23 +173,3 @@ export default function SignIn() {
     </section>
   );
 }
-
-//     const emailExists = users.some((item: User) => item.email === email);
-
-//     if (emailExists) {
-//       setError("Esse email já foi cadastrado. Faça o Login");
-//       return;
-//     }
-
-//     const id = users.length + 1;
-//     const newUser = { id, name, email, password };
-//     users.push(newUser);
-//     localStorage.setItem("@Users", JSON.stringify(users));
-//     router.push("/login");
-//   }
-// };
-
-// if (userCtx?.user) {
-//   redirect("/dashboard");
-
-// }
