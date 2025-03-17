@@ -14,6 +14,7 @@ import {
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { chartConfig, chartData } from "@/data/data-bar-chart";
 import ChartBar from "@/components/charts/bar";
+import { DonutChart } from "@/components/charts/donut";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -65,15 +66,19 @@ export default function Dashboard() {
             content={32}
           />
         </section>
-        <section className="p-4">
-          <div className="h-96 w-96">
-            <CustomCard
-              title="Total de vendas"
-              description="Vendas de produtos e serviços nos últimos 6 meses"
-            >
-              <ChartBar />
-            </CustomCard>
-          </div>
+        <section className=" grid grid-cols-2 gap-4 p-4">
+          <CustomCard
+            title="Total de vendas"
+            description="Vendas de produtos e serviços nos últimos 6 meses"
+          >
+            <ChartBar />
+          </CustomCard>
+          <CustomCard
+            title="Outsourcing"
+            description="Principais serviços realizados nos últimos 60 dias"
+          >
+            <DonutChart />
+          </CustomCard>
         </section>
       </main>
     </>
