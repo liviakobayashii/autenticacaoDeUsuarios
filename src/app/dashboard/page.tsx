@@ -4,6 +4,16 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 import CustomCard from "@/components/card";
 import TopCard from "@/components/top-card";
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { chartConfig, chartData } from "@/data/data-bar-chart";
+import ChartBar from "@/components/charts/bar";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -36,20 +46,27 @@ export default function Dashboard() {
           <p onClick={logout}>Logout</p>
         </div>
       </header>
-      <main className=" flex flex-col bg-neutral-200 h-[calc(100vh-80px)]">
-        <section className="grid grid-cols-3 gap-3 p-4">
+      <main className=" flex flex-col bg-neutral-200 min-h-[calc(100vh-80px)]">
+        <section className="grid grid-cols-4 gap-3 p-4">
           <TopCard
-            title="Número de vendas"
+            title="Total de produtos vendidos"
             icon="hugeicons:sale-tag-02"
-            description="Número de vendas nos últimos 30 dias."
-            content={1028}
+            description="Total de produtos vendidos nos últimos 6 meses."
+            content={1.261}
           />
           <TopCard
-            title="Valor total de vendas"
+            title="Total de serviços prestados"
             icon="solar:money-bag-linear"
-            description="Valor total de vendas nos últimos 30 dias."
+            description="Total de serviçoes prestados nos últimos 6 meses."
+            content={12}
+          />
+          <TopCard
+            title="Valor total das vendas"
+            icon="streamline:money-graph-analytics-business-product-graph-data-chart-analysis"
+            description="Valor total de serviços prestados e produtos vendidos nos últimos 6 meses."
             content="R$398.252,23"
           />
+
           <TopCard
             title="Novos clientes"
             icon="f7:person-3"
@@ -57,13 +74,15 @@ export default function Dashboard() {
             content={32}
           />
         </section>
-        <section>
-          <CustomCard
-            title="Título teste"
-            description="Essa é uma descrição do card"
-          >
-            <div className="border bordeer-red-600 h-10">div teste</div>
-          </CustomCard>
+        <section className="p-4">
+          <div className="h-96 w-96">
+            <CustomCard
+              title="Total de vendas"
+              description="Vendas de produtos e serviços nos últimos 6 meses"
+            >
+              <ChartBar />
+            </CustomCard>
+          </div>
         </section>
       </main>
     </>
