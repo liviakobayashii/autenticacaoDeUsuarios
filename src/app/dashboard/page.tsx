@@ -1,11 +1,11 @@
 "use client";
 
-import { AuthContext } from "@/contexts/AuthContext";
-import { redirect } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
+import CustomCard from "@/components/card";
 
 export default function Dashboard() {
+  const router = useRouter();
   // const userCtx = useContext(AuthContext);
 
   // if (userCtx?.loading === true) {
@@ -19,12 +19,32 @@ export default function Dashboard() {
   //     redirect("/login");
   //   }
 
-  //   const logout = () => {
-  //     localStorage.removeItem("@LoggedUser");
-  //     redirect("/login");
-  //   };
+  const logout = () => {
+    localStorage.removeItem("@LoggedUser");
+    router.push("/login");
+  };
   return (
-    <h1>Dashboard</h1>
+    <>
+      <header className="flex justify-between items-center h-20 p-4">
+        <h1 className="text-3xl font-bold text-blue-600">Dashboard</h1>
+        <div className="flex gap-1 p-3 justify-center items-center hover:text-blue-600 hover:cursor-pointer duration-200">
+          <Icon
+            icon="material-symbols:logout-rounded"
+            className="text-blue-600 font-bold text-xl"
+          />
+          <p onClick={logout}>Logout</p>
+        </div>
+      </header>
+      <main className="bg-neutral-200 h-[calc(100vh-80px)]">
+        <CustomCard
+          title="Título teste"
+          description="Essa é uma descrição do card"
+        >
+          <div className="border bordeer-red-600 h-10">div teste</div>
+        </CustomCard>
+      </main>
+    </>
+    //
     // <>
     //   <Header />
     //   <section className="grid grid-cols-5 h-full">
