@@ -21,9 +21,7 @@ export default function CustomCard({ title, description, children }: Props) {
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <p>{children}</p>
-      </CardContent>
+      <CardContent>{children}</CardContent>
     </Card>
   );
 }
