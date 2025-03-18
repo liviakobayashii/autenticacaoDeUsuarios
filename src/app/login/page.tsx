@@ -69,7 +69,7 @@ export default function LogIn() {
 
       if (foundUser) {
         LoginUser(foundUser);
-        router.push("/dashboard");
+        redirect("/dashboard");
       } else {
         toast.custom(() => (
           <div className="bg-red-400 rounded-sm p-3">
