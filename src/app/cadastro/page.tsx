@@ -33,9 +33,11 @@ export default function SignIn() {
   const loggedUserCtx = useContext(LoggedUserContext);
 
   const userLoggedExist = getLoggedUser();
-  if (userLoggedExist || loggedUserCtx?.user) {
-    redirect("/dashboard");
-  }
+  useEffect(() => {
+    if (userLoggedExist || loggedUserCtx?.user) {
+      router.push("/dashboard");
+    }
+  }, [userLoggedExist, loggedUserCtx?.user, router]);
 
   const formSchema = z.object({
     name: z.string().trim().min(4, "O nome precisa ter no mínimo 4 letras."),

@@ -1,3 +1,5 @@
+"use client";
+
 export function getUsers() {
   const storedUsers = localStorage.getItem("@Users");
 
