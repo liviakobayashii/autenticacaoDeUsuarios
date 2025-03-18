@@ -4,8 +4,7 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 import CustomCard from "@/components/card";
 import TopCard from "@/components/top-card";
-import { chartData } from "@/data/data-bar-chart";
-import ChartBar from "@/components/charts/bar";
+import ChartBar, { chartData } from "@/components/charts/bar";
 import { DonutChart } from "@/components/charts/donut";
 import { ChartBarMixed } from "@/components/charts/mixed";
 
