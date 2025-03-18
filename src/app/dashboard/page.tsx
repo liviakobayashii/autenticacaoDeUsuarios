@@ -4,17 +4,10 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 import CustomCard from "@/components/card";
 import TopCard from "@/components/top-card";
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { chartConfig, chartData } from "@/data/data-bar-chart";
+import { chartData } from "@/data/data-bar-chart";
 import ChartBar from "@/components/charts/bar";
 import { DonutChart } from "@/components/charts/donut";
+import { ChartBarMixed } from "@/components/charts/mixed";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -29,7 +22,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <header className="flex justify-between items-center h-20 p-4">
+      <header className="flex justify-between items-center h-20 px-4 py-12">
         <h1 className="text-3xl font-bold text-blue-600">Dashboard</h1>
         <div className="flex gap-1 p-4 justify-center items-center hover:text-blue-600 hover:cursor-pointer duration-200">
           <Icon
@@ -40,7 +33,7 @@ export default function Dashboard() {
         </div>
       </header>
       <main className="flex flex-col bg-neutral-200 min-h-[calc(100vh-80px)]">
-        <section className="grid grid-cols-4 gap-3 p-4">
+        <section className="grid grid-cols-4 gap-3 mt-6 p-4">
           <TopCard
             title="Total de produtos vendidos"
             icon="hugeicons:sale-tag-02"
@@ -66,18 +59,24 @@ export default function Dashboard() {
             content={32}
           />
         </section>
-        <section className=" grid grid-cols-2 gap-4 p-4">
+        <section className=" grid grid-cols-3 gap-4 p-4">
           <CustomCard
             title="Total de vendas"
-            description="Vendas de produtos e serviços nos últimos 6 meses"
+            description="Vendas de produtos e serviços nos últimos 6 meses."
           >
             <ChartBar />
           </CustomCard>
           <CustomCard
             title="Outsourcing"
-            description="Principais serviços realizados nos últimos 60 dias"
+            description="Principais serviços realizados nos últimos 60 dias."
           >
             <DonutChart />
+          </CustomCard>
+          <CustomCard
+            title="Produtos"
+            description="Produtos mais vendidos nos últimos 60 dias."
+          >
+            <ChartBarMixed />
           </CustomCard>
         </section>
       </main>

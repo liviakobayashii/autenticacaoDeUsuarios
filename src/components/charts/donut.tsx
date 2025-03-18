@@ -1,17 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -19,35 +10,35 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 const chartData = [
-  { browser: "chrome", servicos: 275, fill: "#193CB8" },
-  { browser: "safari", servicos: 200, fill: "#50a2ff" },
-  { browser: "firefox", servicos: 287, fill: "#2b7fff" },
-  { browser: "edge", servicos: 173, fill: "#1447e6" },
-  { browser: "other", servicos: 190, fill: "#155dfc" },
+  { browser: "Design", servicos: 28, fill: "#193CB8" },
+  { browser: "Marketing", servicos: 24, fill: "#1447e6" },
+  { browser: "Sites", servicos: 21, fill: "#155dfc" },
+  { browser: "Aplicativos", servicos: 17, fill: "#2b7fff" },
+  { browser: "IA", servicos: 15, fill: "#50a2ff" },
 ];
 
 const chartConfig = {
   servicos: {
     label: "Serviços",
   },
-  chrome: {
-    label: "Chrome",
+  Sites: {
+    label: "Sites",
     color: "hsl(var(--chart-1))",
   },
-  safari: {
-    label: "Safari",
+  Aplicativos: {
+    label: "Aplicativos",
     color: "hsl(var(--chart-2))",
   },
-  firefox: {
-    label: "Firefox",
+  Design: {
+    label: "Design",
     color: "hsl(var(--chart-3))",
   },
-  edge: {
-    label: "Edge",
+  Marketing: {
+    label: "Marketing",
     color: "hsl(var(--chart-4))",
   },
-  other: {
-    label: "Other",
+  IA: {
+    label: "IA",
     color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig;

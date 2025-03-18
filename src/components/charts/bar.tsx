@@ -22,8 +22,8 @@ export default function ChartBar() {
           cursor={true}
           content={<ChartTooltipContent indicator="dashed" />}
         />
-        <Bar dataKey="produtos" fill="var(--color-produtos)" radius={4} />
-        <Bar dataKey="servicos" fill="var(--color-servicos)" radius={4} />
+        <Bar dataKey="produtos" fill="#155dfc" radius={4} />
+        <Bar dataKey="servicos" fill="#50a2ff" radius={4} />
       </BarChart>
     </ChartContainer>
   );
