@@ -61,13 +61,13 @@ export default function SignIn() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     if (
       values.name.trim() !== "" &&
       values.email.trim() !== "" &&
       values.password.trim() !== ""
     ) {
-      const users = getUsers();
+      const users = await getUsers();
       const emailExists = users.some(
         (item: any) => values.email === item.email
       );
