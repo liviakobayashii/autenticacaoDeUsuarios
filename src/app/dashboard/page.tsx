@@ -7,6 +7,7 @@ import TopCard from "@/components/top-card";
 import ChartBar, { chartData } from "@/components/charts/bar";
 import { DonutChart } from "@/components/charts/donut";
 import { ChartBarMixed } from "@/components/charts/mixed";
+import SheetMenu from "@/components/sheet";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -14,22 +15,23 @@ export default function Dashboard() {
   const totalProdutos = chartData.reduce((acc, item) => acc + item.produtos, 0);
   const totalServicos = chartData.reduce((acc, item) => acc + item.servicos, 0);
 
-  const logout = () => {
-    localStorage.removeItem("@LoggedUser");
-    router.push("/login");
-  };
+  // const logout = () => {
+  //   localStorage.removeItem("@LoggedUser");
+  //   router.push("/login");
+  // };
 
   return (
     <>
       <header className="flex justify-between items-center h-20 px-4 py-12">
         <h1 className="text-3xl font-bold text-blue-600">Dashboard</h1>
-        <div className="flex gap-1 p-4 justify-center items-center hover:text-blue-600 hover:cursor-pointer duration-200">
+        {/* <div className="flex gap-1 p-4 justify-center items-center hover:text-blue-600 hover:cursor-pointer duration-200">
           <Icon
             icon="material-symbols:logout-rounded"
             className="text-blue-600 font-bold text-xl"
           />
           <p onClick={logout}>Logout</p>
-        </div>
+        </div> */}
+        <SheetMenu />
       </header>
       <main className="flex flex-col bg-neutral-200 min-h-[calc(100vh-80px)]">
         <section className="grid grid-cols-4 gap-3 mt-6 p-4">
