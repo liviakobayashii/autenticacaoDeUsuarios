@@ -1,36 +1,43 @@
 "use client";
 
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Icon } from "@iconify/react";
+import { LoggedUserContext } from "@/contexts/user-context";
+import SheetMenu from "@/components/sheet";
 import CustomCard from "@/components/card";
 import TopCard from "@/components/top-card";
-import ChartBar, { chartData } from "@/components/charts/bar";
-import { DonutChart } from "@/components/charts/donut";
 import { ChartBarMixed } from "@/components/charts/mixed";
-import SheetMenu from "@/components/sheet";
+import { DonutChart } from "@/components/charts/donut";
+import ChartBar, { chartData } from "@/components/charts/bar";
 
 export default function Dashboard() {
+  const userLoggedCtx = useContext(LoggedUserContext);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!userLoggedCtx?.loading && !userLoggedCtx?.user) {
+      router.push("/login");
+    }
+  }, [userLoggedCtx, router]);
+
+  if (
+    userLoggedCtx?.loading ||
+    (!userLoggedCtx?.loading && !userLoggedCtx?.user)
+  ) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-2xl font-bold text-blue-600">Carregando...</p>
+      </div>
+    );
+  }
 
   const totalProdutos = chartData.reduce((acc, item) => acc + item.produtos, 0);
   const totalServicos = chartData.reduce((acc, item) => acc + item.servicos, 0);
-
-  // const logout = () => {
-  //   localStorage.removeItem("@LoggedUser");
-  //   router.push("/login");
-  // };
 
   return (
     <>
       <header className="flex justify-between items-center h-20 px-4 py-12">
         <h1 className="text-3xl font-bold text-blue-600">Dashboard</h1>
-        {/* <div className="flex gap-1 p-4 justify-center items-center hover:text-blue-600 hover:cursor-pointer duration-200">
-          <Icon
-            icon="material-symbols:logout-rounded"
-            className="text-blue-600 font-bold text-xl"
-          />
-          <p onClick={logout}>Logout</p>
-        </div> */}
         <SheetMenu />
       </header>
       <main className="flex flex-col bg-neutral-200 min-h-[calc(100vh-80px)]">
