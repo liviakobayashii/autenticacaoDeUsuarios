@@ -1,14 +1,7 @@
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { useRouter } from "next/navigation";
+
 import { z } from "zod";
 import {
   Form,
@@ -23,23 +16,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { LoggedUserContext } from "@/contexts/user-context";
 import { getUsers } from "@/actions/get-users";
 import SaveUser from "@/actions/save-user";
-import { getLoggedUser } from "@/actions/get-logged-user";
-import FormCadastro from "@/components/form-cadastro";
-import MobileCard from "@/components/mobile-card";
 
-export default function SignIn() {
+export default function FormCadastro() {
   const router = useRouter();
-  // const loggedUserCtx = useContext(LoggedUserContext);
-
-  // const userLoggedExist = getLoggedUser();
-  // useEffect(() => {
-  //   if (userLoggedExist || loggedUserCtx?.user) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [userLoggedExist, loggedUserCtx?.user, router]);
 
   const formSchema = z.object({
     name: z.string().trim().min(4, "O nome precisa ter no mínimo 4 letras."),
@@ -94,29 +75,66 @@ export default function SignIn() {
   }
 
   return (
-    <section className="flex w-full h-full">
-      <div className="hidden lg:flex w-screen h-screen bg-slate-200 items-center justify-center">
-        <img src="../../../signin.png" alt="" className="h-screen w-screen" />
-      </div>
-      <div className="flex flex-col h-screen w-screen bg-slate-200 md:bg-blue-600 justify-center items-center">
-        <Card className="hidden md:block m-4 border h-auto">
-          <CardHeader>
-            <CardTitle className="text-3xl text-blue-600">
-              Área de cadastro
-            </CardTitle>
-            <CardDescription>Faça seu cadastro agora mesmo!</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FormCadastro />
-          </CardContent>
-        </Card>
-        <MobileCard
-          title="Área de cadastro"
-          description="Faça seu cadastro agora mesmo!"
-        >
-          <FormCadastro />
-        </MobileCard>
-      </div>
-    </section>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nome completo</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite seu nome completo" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>E-mail</FormLabel>
+              <FormControl>
+                <Input placeholder="exemplo@email.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Senha</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Digite sua senha"
+                  type="password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Cadastro</Button>
+        <p className="text-black/60 mt-4 text-sm">
+          Já tem uma conta? Então faça o{" "}
+          <span
+            className="max-md:text-blue-600 cursor-pointer hover:text-blue-600 duration-200 font-bold"
+            onClick={() => router.push("/login")}
+          >
+            Login
+          </span>{" "}
+          agora mesmo!
+        </p>
+      </form>
+    </Form>
   );
 }

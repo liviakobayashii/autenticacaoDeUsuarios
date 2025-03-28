@@ -27,11 +27,11 @@ export default function SheetMenu() {
   return (
     <Sheet>
       <SheetTrigger className="flex gap-3 justify-center items-center">
-        <p className="text-sm">{userLoggedCtx?.user?.name}</p>
+        <p className="max-sm:hidden">{userLoggedCtx?.user?.name}</p>
         <AvatarIcon />
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader>
+        <SheetHeader className="flex flex-col">
           <SheetTitle className="text-xl my-4 font-bold text-blue-600">
             Dados do usuário
           </SheetTitle>
