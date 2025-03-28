@@ -30,14 +30,14 @@ import { getLoggedUser } from "@/actions/get-logged-user";
 
 export default function SignIn() {
   const router = useRouter();
-  const loggedUserCtx = useContext(LoggedUserContext);
+  // const loggedUserCtx = useContext(LoggedUserContext);
 
-  const userLoggedExist = getLoggedUser();
-  useEffect(() => {
-    if (userLoggedExist || loggedUserCtx?.user) {
-      router.push("/dashboard");
-    }
-  }, [userLoggedExist, loggedUserCtx?.user, router]);
+  // const userLoggedExist = getLoggedUser();
+  // useEffect(() => {
+  //   if (userLoggedExist || loggedUserCtx?.user) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [userLoggedExist, loggedUserCtx?.user, router]);
 
   const formSchema = z.object({
     name: z.string().trim().min(4, "O nome precisa ter no mínimo 4 letras."),

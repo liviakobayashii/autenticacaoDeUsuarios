@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { LoggedUserContext } from "@/contexts/user-context";
 import SheetMenu from "@/components/sheet";
 import CustomCard from "@/components/card";
@@ -15,8 +15,8 @@ export default function Dashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!userLoggedCtx?.loading && !userLoggedCtx?.user) {
-      router.push("/login");
+    if (!userLoggedCtx?.user) {
+      redirect("/login");
     }
   }, [userLoggedCtx, router]);
 

@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { LoggedUserContext } from "@/contexts/user-context";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect, useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -30,10 +30,6 @@ import { z } from "zod";
 export default function LogIn() {
   const router = useRouter();
   const userLoggedCtx = useContext(LoggedUserContext);
-  if (userLoggedCtx?.loading) {
-    return;
-  }
-  userLoggedCtx?.user && redirect("/dashboard");
 
   const formSchema = z.object({
     email: z.string().email({
@@ -55,21 +51,28 @@ export default function LogIn() {
     },
   });
 
+  useEffect(() => {
+    if (userLoggedCtx?.user) {
+      redirect("/dashboard");
+    }
+  });
+
+  if (userLoggedCtx?.loading) {
+    return;
+  }
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (values.email.trim() !== "" && values.password.trim() !== "") {
       const users = getUsers();
-
-      console.log("Usuários encontrados:", users);
 
       const foundUser = users.find(
         (item: any) =>
           values.email === item.email && values.password === item.password
       );
-      console.log(foundUser);
 
       if (foundUser) {
         LoginUser(foundUser);
-        redirect("/dashboard");
+        router.push("/dashboard");
       } else {
         toast.custom(() => (
           <div className="bg-red-400 rounded-sm p-3">
