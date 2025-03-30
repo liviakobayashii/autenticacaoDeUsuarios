@@ -19,13 +19,14 @@ export default function LogIn() {
 
   useEffect(() => {
     if (userLoggedCtx?.user) {
-      redirect("/dashboard");
+      router.push("/dashboard");
+      console.log("oi");
     }
   });
 
-  if (userLoggedCtx?.loading) {
-    return;
-  }
+  // if (userLoggedCtx?.loading) {
+  //   return;
+  // }
 
   // function onSubmit(values: z.infer<typeof formSchema>) {
   //   if (values.email.trim() !== "" && values.password.trim() !== "") {

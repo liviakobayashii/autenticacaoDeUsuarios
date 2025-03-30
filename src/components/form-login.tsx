@@ -23,6 +23,7 @@ import { z } from "zod";
 
 export default function FormLogin() {
   const router = useRouter();
+  const userLoggedCtx = useContext(LoggedUserContext);
 
   const formSchema = z.object({
     email: z.string().email({
@@ -52,9 +53,10 @@ export default function FormLogin() {
         (item: any) =>
           values.email === item.email && values.password === item.password
       );
-      console.log(foundUser);
+      // console.log(foundUser);
       if (foundUser) {
-        LoginUser(foundUser); // Realiza o login do usuário
+        userLoggedCtx?.login(foundUser);
+        // Realiza o login do usuário
         router.push("/dashboard"); // Redireciona para o dashboard
       } else {
         toast.custom(() => (

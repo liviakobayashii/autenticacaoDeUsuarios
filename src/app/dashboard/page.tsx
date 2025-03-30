@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useEffect } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { LoggedUserContext } from "@/contexts/user-context";
 import SheetMenu from "@/components/sheet";
 import CustomCard from "@/components/card";
@@ -14,29 +14,29 @@ export default function Dashboard() {
   const userLoggedCtx = useContext(LoggedUserContext);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (!userLoggedCtx?.user) {
-  //     redirect("/login");
-  //   }
-  // }, [userLoggedCtx, router]);
+  useEffect(() => {
+    if (!userLoggedCtx?.user) {
+      router.push("/login");
+    }
+  }, [userLoggedCtx]);
 
-  // if (
-  //   userLoggedCtx?.loading ||
-  //   (!userLoggedCtx?.loading && !userLoggedCtx?.user)
-  // ) {
-  //   return (
-  //     <div className="flex justify-center items-center h-screen">
-  //       <p className="text-2xl font-bold text-blue-600">Carregando...</p>
-  //     </div>
-  //   );
-  // }
+  if (
+    userLoggedCtx?.loading ||
+    (!userLoggedCtx?.loading && !userLoggedCtx?.user)
+  ) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-2xl font-bold text-blue-600">Carregando...</p>
+      </div>
+    );
+  }
 
   const totalProdutos = chartData.reduce((acc, item) => acc + item.produtos, 0);
   const totalServicos = chartData.reduce((acc, item) => acc + item.servicos, 0);
 
   return (
     <div className="flex flex-col h-screen">
-      <header className="flex justify-between items-center h-20 px-4 py-12">
+      <header className="flex justify-between items-center h-24 px-4">
         <h1 className="text-3xl font-bold text-blue-600">Dashboard</h1>
         <SheetMenu />
       </header>
