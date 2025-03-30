@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 import { LoggedUserContext } from "@/contexts/user-context";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 
 export default function LogIn() {
@@ -20,35 +20,9 @@ export default function LogIn() {
   useEffect(() => {
     if (userLoggedCtx?.user) {
       router.push("/dashboard");
-      console.log("oi");
     }
   });
 
-  // if (userLoggedCtx?.loading) {
-  //   return;
-  // }
-
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   if (values.email.trim() !== "" && values.password.trim() !== "") {
-  //     const users = getUsers();
-
-  //     const foundUser = users.find(
-  //       (item: any) =>
-  //         values.email === item.email && values.password === item.password
-  //     );
-
-  //     if (foundUser) {
-  //       LoginUser(foundUser);
-  //       router.push("/dashboard");
-  //     } else {
-  //       toast.custom(() => (
-  //         <div className="bg-red-400 rounded-sm p-3">
-  //           E-mail ou senha incorretos. Verifique e tente novamente.
-  //         </div>
-  //       ));
-  //     }
-  //   }
-  // }
   return (
     <section className="flex">
       <div className=" hidden lg:flex w-screen h-screen bg-slate-200 items-center justify-center">

@@ -1,7 +1,5 @@
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -9,90 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { LoggedUserContext } from "@/contexts/user-context";
-import { getUsers } from "@/actions/get-users";
-import SaveUser from "@/actions/save-user";
-import { getLoggedUser } from "@/actions/get-logged-user";
+
 import FormCadastro from "@/components/form-cadastro";
 import MobileCard from "@/components/mobile-card";
 
 export default function SignIn() {
-  const router = useRouter();
-  // const loggedUserCtx = useContext(LoggedUserContext);
-
-  // const userLoggedExist = getLoggedUser();
-  // useEffect(() => {
-  //   if (userLoggedExist || loggedUserCtx?.user) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [userLoggedExist, loggedUserCtx?.user, router]);
-
-  const formSchema = z.object({
-    name: z.string().trim().min(4, "O nome precisa ter no mínimo 4 letras."),
-    email: z.string().email({
-      message: "E-mail inválido. Verifique novamente",
-    }),
-    password: z
-      .string()
-      .min(2, {
-        message: "A senha precisa ter no mínimo 2 caracteres",
-      })
-      .max(12),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (
-      values.name.trim() !== "" &&
-      values.email.trim() !== "" &&
-      values.password.trim() !== ""
-    ) {
-      const users = await getUsers();
-      const emailExists = users.some(
-        (item: any) => values.email === item.email
-      );
-
-      if (emailExists) {
-        toast.custom(() => (
-          <div className="bg-yellow-200 rounded-sm p-3">
-            Esse e-mail já foi cadastrado anteriormente. Favor realizar o login.
-          </div>
-        ));
-      } else {
-        users.push(values);
-        SaveUser(users);
-        router.push("/login");
-        toast.custom(() => (
-          <div className="bg-green-400 rounded-sm p-3">
-            Cadastro realizado com sucesso. Faça o login agora mesmo!
-          </div>
-        ));
-      }
-    }
-  }
-
   return (
     <section className="flex w-full h-full">
       <div className="hidden lg:flex w-screen h-screen bg-slate-200 items-center justify-center">
