@@ -10,6 +10,7 @@ type LoggedUserType = {
   setUser: (user: UsersType | null) => void;
   loading: boolean;
   login: (userToSave: UsersType) => void;
+  logout: () => void;
 };
 
 export const LoggedUserContext = createContext<LoggedUserType | null>(null);
@@ -27,13 +28,20 @@ export default function LoggedUserProvider({
     setUser(userToSave);
   };
 
+  const logout = () => {
+    localStorage.removeItem("@LoggedUser");
+    setUser(null);
+  };
+
   useEffect(() => {
     setUser(getLoggedUser());
     setLoading(false);
   }, []);
 
   return (
-    <LoggedUserContext.Provider value={{ user, setUser, loading, login }}>
+    <LoggedUserContext.Provider
+      value={{ user, setUser, loading, login, logout }}
+    >
       {children}
     </LoggedUserContext.Provider>
   );
